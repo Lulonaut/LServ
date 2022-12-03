@@ -1,7 +1,7 @@
 package lserv.net
 
 enum class Method {
-    GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH, CUSTOM;
+    GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH, CUSTOM, ANY;
 
     companion object {
         /**

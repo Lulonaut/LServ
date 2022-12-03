@@ -1,7 +1,8 @@
 package lserv.util
 
-import lserv.net.Response
+class Result<T, R>(val obj: T? = null, val error: R? = null) {
 
-class Result<T>(val thing: T, val error: Response?) {
+    fun isError(): Boolean = obj == null
 
+    fun isSuccess(): Boolean = obj != null
 }

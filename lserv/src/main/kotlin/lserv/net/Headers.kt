@@ -47,7 +47,6 @@ class Headers(val raw: HashMap<String, String>) {
                 val split = line.split(':', limit = 2)
                 headers[split[0]] = split[1].trim()
             }
-            println(headers)
             return Headers(headers)
         }
 

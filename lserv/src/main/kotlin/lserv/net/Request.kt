@@ -1,5 +1,6 @@
 package lserv.net
 
+import lserv.util.Result
 import org.apache.commons.text.StringEscapeUtils
 
 /**
@@ -11,8 +12,7 @@ class Request(val method: Method, val rawMethod: String, val target: String, val
         /**
          * Parse a full HTTP request
          */
-        fun parse(request: String): Request {
-            Result
+        private fun oldParse(request: String): Request {
             //split the first line of the request
             val split = request.split(' ', '\r')
             if (split.size < 3 || split[2] != "HTTP/1.1") {
@@ -28,6 +28,24 @@ class Request(val method: Method, val rawMethod: String, val target: String, val
 
 
             return Request(requestMethod, rawRequestMethod, target, headers)
+        }
+
+        fun parse(request: String): Result<Request, Response> {
+            //split the first line of the request
+            val split = request.split(' ', '\r')
+            if (split.size < 3 || split[2] != "HTTP/1.1") {
+                return Result(null, Response(responseCode = 400, body = "HTTP 1.1 required!"));
+            }
+//            request.p()
+
+
+            val rawRequestMethod = split[0]
+            val requestMethod = Method.fromString(rawRequestMethod)
+            val target = split[1]
+            val headers = Headers.parse(request)
+
+
+            return Result(Request(requestMethod, rawRequestMethod, target, headers))
         }
     }
 }
